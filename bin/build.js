@@ -6,16 +6,18 @@ const globP = promisify(require('glob'))
 const config = require('../site.config')
 
 const srcPath = './src'
-const disPath = './public'
+const distPath = './public'
 
 // clear destination folder
 fse.emptyDirSync(distPath)
 
 // copy assets folder
-fse.copy(`${srcPath}/assets`, `${disPath}/assets`)
+console.log('Copying assets...')
+fse.copy(`${srcPath}/assets`, `${distPath}/assets`)
 
 // read page templates
-globP('**/*/.ejs', { cwd: `${srcPath}/pages` })
+console.log('Genereating pages...')
+globP('**/*.ejs', { cwd: `${srcPath}/pages` })
   .then((files) => {
     files.forEach((file) => {
       const fileData = path.parse(file)
